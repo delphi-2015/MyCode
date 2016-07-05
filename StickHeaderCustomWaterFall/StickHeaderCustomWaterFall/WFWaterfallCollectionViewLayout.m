@@ -49,6 +49,10 @@ static const NSInteger WFDefaultColumnCount = 2;
     _stickyHeader = YES;
 }
 
+-(BOOL)shouldInvalidateLayoutForBoundsChange:(CGRect)newBound {
+    return self.stickyHeader;
+}
+
 - (void)prepareLayout {
     if (self.collectionView.isDecelerating || self.collectionView.isDragging) {
         
