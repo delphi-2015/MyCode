@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10116" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="nBe-L0-mAw">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
+    </dependencies>
+    <scenes>
+        <!--Navigation Controller-->
+        <scene sceneID="crR-I5-8Zt">
+            <objects>
+                <navigationController id="nBe-L0-mAw" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="Bs5-J8-Ftf">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="rootViewController" id="p6K-gO-fuV"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="x2E-kv-Q1c" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-820" y="-86"/>
+        </scene>
+        <!--Main-->
+        <scene sceneID="tne-QT-ifu">
+            <objects>
+                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="PingTransitionDemo" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
+                        <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0Z1-8t-M3X">
+                                <rect key="frame" x="0.0" y="300" width="600" height="300"/>
+                                <color key="backgroundColor" red="0.86274509799999999" green="0.92941176469999998" blue="0.7843137255" alpha="1" colorSpace="calibratedRGB"/>
+                                <state key="normal" title="Present">
+                                    <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="presentBtnPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="A1j-zS-pIQ"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="e5R-we-lVA">
+                                <rect key="frame" x="0.0" y="64" width="600" height="236"/>
+                                <color key="backgroundColor" red="0.21176470589999999" green="0.27450980390000002" blue="0.36470588240000001" alpha="1" colorSpace="calibratedRGB"/>
+                                <state key="normal" title="Push">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <segue destination="yER-Wj-0Yy" kind="push" id="N6z-P8-8Pn"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                        <gestureRecognizers/>
+                        <constraints>
+                            <constraint firstItem="0Z1-8t-M3X" firstAttribute="top" secondItem="e5R-we-lVA" secondAttribute="bottom" id="1i8-8I-R1E"/>
+                            <constraint firstItem="e5R-we-lVA" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="5r1-FB-ehf"/>
+                            <constraint firstAttribute="trailing" secondItem="e5R-we-lVA" secondAttribute="trailing" id="FdA-5y-gqd"/>
+                            <constraint firstItem="0Z1-8t-M3X" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="HYF-gE-TMU"/>
+                            <constraint firstItem="e5R-we-lVA" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="Hzn-On-Qed"/>
+                            <constraint firstItem="0Z1-8t-M3X" firstAttribute="height" secondItem="8bC-Xf-vdC" secondAttribute="height" multiplier="1:2" id="JLh-Zl-Qqi"/>
+                            <constraint firstAttribute="trailing" secondItem="0Z1-8t-M3X" secondAttribute="trailing" id="VPE-01-SVm"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="0Z1-8t-M3X" secondAttribute="bottom" id="qJV-Bk-8uH"/>
+                        </constraints>
+                        <connections>
+                            <outletCollection property="gestureRecognizers" destination="ev7-9c-lIE" appends="YES" id="qLQ-rM-ngw"/>
+                        </connections>
+                    </view>
+                    <navigationItem key="navigationItem" title="Main" id="nBT-ia-gkr"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer id="ev7-9c-lIE">
+                    <connections>
+                        <outlet property="delegate" destination="BYZ-38-t0r" id="gi6-Mx-0XW"/>
+                    </connections>
+                </tapGestureRecognizer>
+            </objects>
+            <point key="canvasLocation" x="-61" y="-86"/>
+        </scene>
+        <!--Presented View Controller-->
+        <scene sceneID="V2R-dy-gKU">
+            <objects>
+                <viewController storyboardIdentifier="PresentedViewController" id="1i2-ZZ-kPt" customClass="PresentedViewController" customModule="PingTransitionDemo" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="M7e-XZ-QqK"/>
+                        <viewControllerLayoutGuide type="bottom" id="Oh0-iI-F5S"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="RLF-SJ-JpZ">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3al-6s-5Mt">
+                                <rect key="frame" x="273" y="285" width="54" height="30"/>
+                                <state key="normal" title="Dismiss"/>
+                                <connections>
+                                    <action selector="dismissBtnPressed" destination="1i2-ZZ-kPt" eventType="touchUpInside" id="t8u-aU-sep"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" red="0.16862745100000001" green="0.87058823529999996" blue="0.45098039220000002" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstItem="3al-6s-5Mt" firstAttribute="centerX" secondItem="RLF-SJ-JpZ" secondAttribute="centerX" id="3fS-GJ-H2Z"/>
+                            <constraint firstItem="3al-6s-5Mt" firstAttribute="centerY" secondItem="RLF-SJ-JpZ" secondAttribute="centerY" id="pgW-T3-VAf"/>
+                        </constraints>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="lOL-PH-JN2" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-61" y="681"/>
+        </scene>
+        <!--Push-->
+        <scene sceneID="3Y9-xx-1b2">
+            <objects>
+                <viewController id="yER-Wj-0Yy" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="VQd-mQ-bbp"/>
+                        <viewControllerLayoutGuide type="bottom" id="nJr-Jr-Ni6"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="K16-uX-zQm">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" red="0.9416684144295302" green="0.86286178691275173" blue="0.25933305369127518" alpha="1" colorSpace="calibratedRGB"/>
+                    </view>
+                    <toolbarItems/>
+                    <navigationItem key="navigationItem" title="Push" id="mUN-kC-ptd"/>
+                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="wtX-lj-L4i" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="650" y="-86"/>
+        </scene>
+    </scenes>
+</document>
