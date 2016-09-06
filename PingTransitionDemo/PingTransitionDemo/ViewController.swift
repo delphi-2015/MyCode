@@ -16,6 +16,7 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        //push 展示代理设置
         navigationController?.delegate = self
         // Do any additional setup after loading the view, typically from a nib.
     }
@@ -25,6 +26,7 @@ class ViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
+    //present 展示设置代理
     @IBAction func presentBtnPressed(sender: AnyObject) {
         let vc = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("PresentedViewController") as! PresentedViewController
         

@@ -12,9 +12,9 @@ NSString* const WFwaterfallLayoutCellKind = @"WaterfallCell";
 static const NSInteger WFDefaultColumnCount = 2;
 
 @interface WFWaterfallCollectionViewLayout ()
-
+//每个section item的列数
 @property (strong, nonatomic) NSMutableArray *columnsCountInSections;
-
+//布局信息
 @property (nonatomic) NSDictionary *layoutInfo;
 @property (nonatomic) NSArray *sectionsHeights;
 @property (nonatomic) NSArray *itemsInSectionsHeights;
@@ -79,6 +79,7 @@ static const NSInteger WFDefaultColumnCount = 2;
         }];
     }];
     
+    //是否悬停header
     if(!self.stickyHeader) {
         return allAttributes;
     }
@@ -92,6 +93,7 @@ static const NSInteger WFDefaultColumnCount = 2;
             CGFloat headerHeight = CGRectGetHeight(layoutAttributes.frame) + _topInset;
             CGFloat currentHeaderHeight = [self headerHeightForIndexPath:firstCellIndexPath];
             CGPoint origin = layoutAttributes.frame.origin;
+            //动态计算悬停header的高度
             origin.y = MIN(
                            MAX(self.collectionView.contentOffset.y, (CGRectGetMinY(firstCellAttrs.frame) - headerHeight) - _headerMarginToTop),
                            CGRectGetMinY(firstCellAttrs.frame) - headerHeight + [[self.sectionsHeights objectAtIndex:section] floatValue] - currentHeaderHeight - _headerMarginToTop
@@ -128,7 +130,7 @@ static const NSInteger WFDefaultColumnCount = 2;
 }
 
 #pragma mark - Prepare layout calculation
-
+//获取每个section的items数
 - (void) calculateMaxColumnsCount {
     _columnsCountInSections = [NSMutableArray new];
     NSInteger sections = self.collectionView.numberOfSections;
@@ -141,6 +143,7 @@ static const NSInteger WFDefaultColumnCount = 2;
     }
 }
 
+//获取每个item高度
 - (void) calculateItemsHeights {
     NSMutableArray *itemsInSectionsHeights = [NSMutableArray arrayWithCapacity:self.collectionView.numberOfSections];
     NSIndexPath *itemIndex;
@@ -157,6 +160,7 @@ static const NSInteger WFDefaultColumnCount = 2;
     self.itemsInSectionsHeights = itemsInSectionsHeights;
 }
 
+//计算每个section的高度
 - (void) calculateSectionsHeights {
     NSMutableArray *newSectionsHeights = [NSMutableArray array];
     NSInteger sectionCount = [self.collectionView numberOfSections];
@@ -175,6 +179,7 @@ static const NSInteger WFDefaultColumnCount = 2;
         + _topInset;
     }
     
+    //section内排列items，叠加高度
     NSInteger itemCount = [self.collectionView numberOfItemsInSection:section];
     for (NSInteger item = 0; item < itemCount; item++) {
         indexPath = [NSIndexPath indexPathForItem:item inSection:section];
@@ -191,6 +196,7 @@ static const NSInteger WFDefaultColumnCount = 2;
         sectionColumns[currentColumn] += _topInset;
     }
     
+    //找出最高item高度数值
     NSInteger biggestColumn = 0;
     for (NSInteger column = 0; column < columnsCount; column++) {
         if(sectionColumns[biggestColumn] < sectionColumns[column]) {
@@ -201,6 +207,7 @@ static const NSInteger WFDefaultColumnCount = 2;
     return [NSNumber numberWithFloat: sectionColumns[biggestColumn]];
 }
 
+//计算items布局
 - (void) calculateItemsAttributes {
     NSMutableDictionary *newLayoutInfo = [NSMutableDictionary dictionary];
     NSMutableDictionary *cellLayoutInfo = [NSMutableDictionary dictionary];
@@ -216,11 +223,9 @@ static const NSInteger WFDefaultColumnCount = 2;
             itemAttributes.frame = [self frameForWaterfallCellIndexPath:indexPath];
             cellLayoutInfo[indexPath] = itemAttributes;
             
-            //Only one header in section, so we get only item at 0 position
+            //每个section只有一个头部，添加hearder attribute
             if (indexPath.item == 0) {
-                UICollectionViewLayoutAttributes *titleAttributes = [UICollectionViewLayoutAttributes
-                                                                     layoutAttributesForSupplementaryViewOfKind:UICollectionElementKindSectionHeader
-                                                                     withIndexPath:indexPath];
+                UICollectionViewLayoutAttributes *titleAttributes = [UICollectionViewLayoutAttributes layoutAttributesForSupplementaryViewOfKind:UICollectionElementKindSectionHeader withIndexPath:indexPath];
                 titleAttributes.frame = [self frameForWaterfallHeaderAtIndexPath:indexPath];
                 titleLayoutInfo[indexPath] = titleAttributes;
             }
@@ -231,18 +236,19 @@ static const NSInteger WFDefaultColumnCount = 2;
     newLayoutInfo[UICollectionElementKindSectionHeader] = titleLayoutInfo;
     
     self.layoutInfo = newLayoutInfo;
-    
 }
 
 #pragma mark - Items frames
-
+//计算每个items frame
 - (CGRect)frameForWaterfallCellIndexPath:(NSIndexPath *)indexPath {
     NSInteger columnsCount = [_columnsCountInSections[indexPath.section] integerValue];
+    //item 宽度
     CGFloat width = (self.collectionView.frame.size.width - _columnMargin * (columnsCount+1))/columnsCount;
-    
+    //item 高度
     CGFloat height = [[[self.itemsInSectionsHeights objectAtIndex:indexPath.section]
                        objectAtIndex:indexPath.item] floatValue];
     
+    //上一个section的高度
     CGFloat topInset = self.topInset;
     for (NSInteger section = 0; section < indexPath.section; section++) {
         topInset += [[self.sectionsHeights objectAtIndex:section] integerValue];
@@ -253,8 +259,9 @@ static const NSInteger WFDefaultColumnCount = 2;
         columnsHeights[column] = [self headerHeightForIndexPath:indexPath] + _topInset;
     }
     
+    //计算该item所在列数
     for (NSInteger item = 0; item < indexPath.item; item++) {
-        NSIndexPath *ip = [NSIndexPath indexPathForItem:item inSection:indexPath.section];
+        NSIndexPath *itempostion = [NSIndexPath indexPathForItem:item inSection:indexPath.section];
         NSInteger currentColumn = 0;
         for(NSInteger column = 0; column < columnsCount; column++) {
             if(columnsHeights[currentColumn] > columnsHeights[column]) {
@@ -262,8 +269,8 @@ static const NSInteger WFDefaultColumnCount = 2;
             }
         }
         
-        columnsHeights[currentColumn] += [[[self.itemsInSectionsHeights objectAtIndex:ip.section]
-                                           objectAtIndex:ip.item] floatValue];
+        columnsHeights[currentColumn] += [[[self.itemsInSectionsHeights objectAtIndex:itempostion.section]
+                                           objectAtIndex:itempostion.item] floatValue];
         columnsHeights[currentColumn] += _topInset;
     }
     
@@ -274,15 +281,14 @@ static const NSInteger WFDefaultColumnCount = 2;
         }
     }
     
-    CGFloat originX = _topInset +
-    columnForCurrentItem * width +
-    columnForCurrentItem * _topInset;
+    CGFloat originX = _topInset + columnForCurrentItem * width + columnForCurrentItem * _topInset;
     CGFloat originY =  columnsHeights[columnForCurrentItem] + topInset;
     
     return CGRectMake(originX, originY, width, height);
     
 }
 
+//计算每个section header frame
 - (CGRect)frameForWaterfallHeaderAtIndexPath:(NSIndexPath *)indexPath {
     CGFloat width = self.collectionView.bounds.size.width -
     _topInset * 2;
@@ -297,6 +303,7 @@ static const NSInteger WFDefaultColumnCount = 2;
     return CGRectMake(originX, originY, width, height);
 }
 
+//setion header高度
 - (CGFloat) headerHeightForIndexPath:(NSIndexPath*)indexPath {
     if ([self.delegate respondsToSelector:@selector(waterfallLayout:heightFotHeaderAtIndexPath:)]) {
         return [self.delegate waterfallLayout:self heightFotHeaderAtIndexPath:indexPath];

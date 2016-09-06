@@ -13,13 +13,35 @@
 @protocol WFWaterfallCollectionViewLayoutDelegate <NSObject>
 
 @required
-
+/**
+ *  每个item的高度
+ *
+ *  @param layout    WFWaterfallCollectionViewLayout
+ *  @param indexPath NSIndexPath
+ *
+ *  @return CGFloat item高度
+ */
 -(CGFloat)waterfallLayout:(WFWaterfallCollectionViewLayout *)layout heightFotItemAtIndexPath:(NSIndexPath *)indexPath;
 
 @optional
 
+/**
+ *  每个section的item列数
+ *
+ *  @param layout  WFWaterfallCollectionViewLayout
+ *  @param section section
+ *
+ *  @return NSInteger 列数
+ */
 -(NSInteger)waterfallLayout:(WFWaterfallCollectionViewLayout *)layout columnCountInSection:(NSInteger)section;
-
+/**
+ *  每个section的header高度
+ *
+ *  @param layout    WFWaterfallCollectionViewLayout
+ *  @param indexPath NSIndexPath
+ *
+ *  @return CGFloat header高度
+ */
 -(CGFloat)waterfallLayout:(WFWaterfallCollectionViewLayout *)layout heightFotHeaderAtIndexPath:(NSIndexPath *)indexPath;
 
 @end
@@ -33,6 +55,7 @@
 @property (assign, nonatomic) CGFloat columnMargin;
 @property (assign, nonatomic) CGFloat headerMarginToTop;
 
+//是否悬停section header
 @property (assign, nonatomic) BOOL stickyHeader;
 
 @end

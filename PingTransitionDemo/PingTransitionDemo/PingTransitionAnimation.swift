@@ -13,10 +13,12 @@ enum PingTranisionMode {
 }
 
 class PingTransitionAnimation: NSObject {
+    //动画时长
     var duration: NSTimeInterval = 0.0
+    //ping action的触发位置
     var startPoint: CGPoint = CGPointZero
+    //转场类型
     var transitionMode: PingTranisionMode = .open
-    var bubbleColor: UIColor = UIColor.whiteColor()
     
     private var _transitionContext: UIViewControllerContextTransitioning?
 }
